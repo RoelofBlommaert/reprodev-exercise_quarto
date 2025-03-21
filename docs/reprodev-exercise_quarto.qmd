@@ -1,0 +1,64 @@
+---
+title: "reprodev-exercise_quarto"
+author: "Roelof Blommaert"
+format: html
+editor: visual
+bibliography: references.bib
+---
+
+```{r load package, include = FALSE}
+library(mice)
+library(ggmice)
+library(ggplot2)
+library(magrittr)
+
+```
+
+# Meet `Quarto`
+
+`Quarto` enables you to weave together content and executable code into a finished document. 
+To learn more about Quarto see [https://quarto.org](https://quarto.org).
+
+# Meet the `boys` data 
+The `boys` data from the [`mice`](https://github.com/amices/mice){.pkg} package in [`R`]{.proglang} is a random sample of 10% from the cross-sectional data used to construct the Dutch growth references 1997. Variables `gen` and `phb` are ordered factors. `reg` is a factor.
+
+The following table shows the first 6 rows of the `boys` data.
+
+:::: {.columns}
+::: {.column width="60%"}
+```{r show head}
+head(mice::boys)
+```
+:::
+
+::: {.column width="40%"}
+![](https://amices.org/mice/logo.png){fig-align="right" width=60%}
+:::
+::::
+
+```{r}
+#| file: ../scripts/read_data.R
+#| eval: true 
+```
+
+```{r, echo=FALSE}
+head(boys)
+base <-citation(package = "base", lib.loc = NULL, auto = NULL)
+mice <- citation(package = "mice", lib.loc = NULL, auto = NULL)
+ggmice <- citation(package = "ggmice", lib.loc = NULL, auto = NULL)
+```
+
+Not every value in the `mice::boys` set is observed. This may pose problems with the analysis of the `boys` data. To get an idea about the problem, we can use missing data patterns. created the [`ggmice`](https://github.com/amices/ggmice){.pkg} [@ggmice] package to create a [`ggplot2`](https://ggplot2.tidyverse.org){.pkg} [@ggplot2] type plot of the missing values in the `boys` data.
+
+```{r mdpattern}
+library(mice)
+library(ggmice)
+
+# visualize ggplot2-like missing data pattern
+mice::boys |> 
+  ggmice::plot_pattern()
+```
+
+
+
+
